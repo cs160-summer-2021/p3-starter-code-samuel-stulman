@@ -103,77 +103,32 @@
 	<!-- <canvas id="myCanvas" width="750px" height="750px"></canvas>
 	<div id="color-palette"></div> -->
 
-	<div class="container-fluid">
-		<div class="row nav-bar">
-
-			<!-- Make this into a button later -->
-			<div class="col-sm-3 back-button">
-				<div class="row back-button" onclick="gallery()">
-					<span class="material-icons" style="color: white; font-size: 40px;">arrow_back</span>
-				</div>
-			</div>
-
-			<div class="col-sm-6 utensil-down">
-				<div class="row utensil-down">
-					<div class="col-sm-2 nav-icon">
-						<div class="row nav-icon">
-							<img src="https://img.icons8.com/material-outlined/24/ffffff/color-dropper.png" width="35" height="35"/>
-						</div>
-					</div>
-					<div class="col-sm-2 nav-icon">
-						<div class="row nav-icon">
-							<img src="https://img.icons8.com/material-outlined/24/ffffff/pencil--v1.png" width="35" height="35"/>
-						</div>
-					</div>
-					<div class="col-sm-2 nav-icon">
-						<div class="row nav-icon">
-							<img src="https://img.icons8.com/material-outlined/24/ffffff/ball-point-pen.png" width="35" height="35"/>
-						</div>
-					</div>
-					<div class="col-sm-2 nav-icon">
-						<div class="row nav-icon">
-							<img src="https://img.icons8.com/ios-glyphs/30/ffffff/chisel-tip-marker.png" width="35" height="35"/>
-						</div>
-					</div>
-					<div class="col-sm-2 nav-icon">
-						<div class="row nav-icon">
-							<img src="https://img.icons8.com/material-rounded/24/ffffff/paint-brush.png" width="35" height="35"/>
-						</div>
-					</div>
-					<div class="col-sm-2 nav-icon">
-						<div class="row nav-icon">
-							<img src="https://img.icons8.com/ios-glyphs/30/ffffff/eraser.png" width="35" height="35"/>
-						</div>
-					</div>
-				</div>
-				<div class="row utensil-down-drag">
-					<span class="material-icons" style="color: white; transform: scale(4,1); padding-left: 15px;">horizontal_rule</span>
-				</div>
-			</div>
-
-			<div class="col-sm-3 save-undo-redo">
-				<div class="row save-undo-redo">
-					<div class="col-sm-4 save-undo-redo-icon">
-						<div class="row save-undo-redo-icon">
-							<span class="material-icons" style="color: #334867; font-size: 50px;">undo</span>
-						</div>
-					</div>
-					<div class="col-sm-4 save-undo-redo-icon">
-						<div class="row save-undo-redo-icon">
-							<span class="material-icons" style="color: #334867; font-size: 50px;">redo</span>
-						</div>
-					</div>
-					<div class="col-sm-4 save-undo-redo-icon">
-						<div class="row save-undo-redo-icon">
-							<span class="material-icons" style="color: #334867; font-size: 50px;">save</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-        <div class="row">
-            test
+	<div class="container-fluid" id="gallery">
+		<div class="row template-gallery">
+            <div class="col-sm-4 template-gallery"></div>
+            <div class="col-sm-2 template-gallery-button">
+                <div class="row template-gallery-button">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-8">
+                        <div class="row inner-gallery-button">
+                            <p>Gallery</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+            <div class="col-sm-2 template-gallery-button">
+                <div class="row template-gallery-button">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-8">
+                        <div class="row inner-template-button">
+                            <p>Templates</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
         </div>
 	</div>
 </body>

@@ -1,18 +1,10 @@
-hr
-{
-border:solid 10px black;
-width: 96%;
-color: white;
-height: 10px;
-
-}
-
-
 /**************
 
-START NAV BAR STYLING
+NEW INTERACTION PAGE 
 
 ***************/
+
+/* START NAV BAR STYLING */
 
 .row.nav-bar {
     height: 100px;
@@ -82,12 +74,69 @@ START NAV BAR STYLING
     margin-top: 10px;
 }
 
+/* END NAV BAR STYLING */
+
+
 /**************
 
-END NAV BAR STYLING
+GALLERY PAGE
 
 ***************/
 
+
+/* TEMPLATE AND GALLERY BUTTON */
+
+.row.template-gallery-button {
+    /* text-align: center;*/
+    /* border: 2px solid #C0CBDF;  */
+}
+
+.row.inner-template-gallery-button {
+    height: 40px; 
+    margin-top: 40px;
+    padding-left: 10px;
+    border: 2px solid #C0CBDF;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.row.inner-template-button {
+    height: 40px; 
+    margin-top: 40px;
+    padding-left: 15px;
+    border: 2px solid #C0CBDF;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.row.inner-gallery-button {
+    height: 40px; 
+    margin-top: 40px;
+    padding-left: 30px;
+    border: 2px solid #C0CBDF;
+    border-radius: 10px;
+}
+
+.row.inner-template-button p {
+    color: #C0CBDF;
+    font-size: 20px;
+}
+
+.row.inner-gallery-button p {
+    color: #C0CBDF;
+    font-size: 20px;
+}
+
+/* END TEMPLATE AND GALLERY BUTTON */
+
+
+#gallery {
+    background-color: #334867;
+
+    /* Height and width of the ipad we are using */
+    height: 834px;
+    width: 1112px;
+}
 
 
 #color-palette {
