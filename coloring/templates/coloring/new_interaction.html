@@ -174,17 +174,19 @@
 	</div>
 </body>
 <script>
-	let down = false;
-	$(document).ready(function(){
-  		$(".row.utensil-down-drag").click(function(){
-			  if (down) {
-				$(".row.utensil-down").slideDown();
-				down = false;
-			  } else {
-				$(".row.utensil-down").slideUp();
-				down = true;
-			  }
-  		});
+	$( function() {
+		let down = false;
+		$(document).ready(function(){
+			$(".row.utensil-down-drag").click(function(){
+				  if (down) {
+					$(".row.utensil-down").slideDown();
+					down = false;
+				  } else {
+					$(".row.utensil-down").slideUp();
+					down = true;
+				  }
+			});
+		});
 	});
 </script>
 </html>
