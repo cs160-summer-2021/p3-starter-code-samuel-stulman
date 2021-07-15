@@ -8,3 +8,6 @@ def demo(request):
 
 def new_interaction(request):
     return render(request, 'coloring/new_interaction.html')
+
+def gallery(request):
+    return render(request, 'coloring/gallery.html')
