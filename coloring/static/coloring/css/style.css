@@ -76,12 +76,28 @@ NEW INTERACTION PAGE
 
 /* END NAV BAR STYLING */
 
+/**************
+
+END NEW INTERACTION PAGE 
+
+***************/
+
 
 /**************
 
 GALLERY PAGE
 
 ***************/
+
+
+#gallery {
+    background-color: #334867;
+
+    /* Height and width of the ipad we are using */
+    height: 834px;
+    width: 1112px;
+}
+
 
 
 /* TEMPLATE AND GALLERY BUTTON */
@@ -109,6 +125,16 @@ GALLERY PAGE
     text-align: center;
 }
 
+.row.inner-template-button-clicked {
+    height: 40px; 
+    margin-top: 40px;
+    padding-left: 15px;
+    background-color: #C0CBDF;
+    border: 2px solid #C0CBDF;
+    border-radius: 10px;
+    text-align:center;
+}
+
 .row.inner-gallery-button {
     height: 40px; 
     margin-top: 40px;
@@ -122,6 +148,11 @@ GALLERY PAGE
     font-size: 20px;
 }
 
+.row.inner-template-button-clicked p {
+    color: #334867;
+    font-size: 20px;
+}
+
 .row.inner-gallery-button p {
     color: #C0CBDF;
     font-size: 20px;
@@ -129,15 +160,37 @@ GALLERY PAGE
 
 /* END TEMPLATE AND GALLERY BUTTON */
 
+/* START TEMPLATE ROWS */
 
-#gallery {
-    background-color: #334867;
-
-    /* Height and width of the ipad we are using */
-    height: 834px;
-    width: 1112px;
+.row.template-row {
+    /* border: 2px solid #C0CBDF; */
+    height: 180px;
+    margin-top: 50px;
 }
 
+
+.col-sm-4.template-row {
+    /* border: 2px solid #C0CBDF; */
+}
+
+.row.template-image {
+    margin-left: 5px;
+}
+
+.row.template-image p {
+    color: #C0CBDF;
+    font-size: 16px;
+    padding-left: 90px;
+}
+/* END TEMPLATE ROWS */
+
+
+
+/**************
+
+END GALLERY PAGE
+
+***************/
 
 #color-palette {
     width: 300px;

@@ -11,3 +11,6 @@ def new_interaction(request):
 
 def gallery(request):
     return render(request, 'coloring/gallery.html')
+
+def template(request):
+    return render(request, 'coloring/template.html')
