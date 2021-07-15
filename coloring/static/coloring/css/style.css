@@ -143,6 +143,15 @@ GALLERY PAGE
     border-radius: 10px;
 }
 
+.row.inner-gallery-button-clicked {
+    height: 40px; 
+    margin-top: 40px;
+    padding-left: 30px;
+    background-color: #C0CBDF;
+    border: 2px solid #C0CBDF;
+    border-radius: 10px;
+}
+
 .row.inner-template-button p {
     color: #C0CBDF;
     font-size: 20px;
@@ -155,6 +164,11 @@ GALLERY PAGE
 
 .row.inner-gallery-button p {
     color: #C0CBDF;
+    font-size: 20px;
+}
+
+.row.inner-gallery-button-clicked p {
+    color: #334867;
     font-size: 20px;
 }
 
