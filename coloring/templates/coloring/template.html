@@ -18,6 +18,10 @@
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
 
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 	<script type="text/javascript" canvas="canvas">
 		window.onload = function() {
@@ -133,10 +137,32 @@
 
         <div class="row template-row">
             <div class="col-sm-4 template-row">
-                <div class="row template-image">
-                    <img src="../static/coloring/images/new_template.png" height="180">
-                    <p>Import New Template</p>
-                </div>
+
+				<a href="#" data-toggle="modal" data-target="#staticBackdrop">
+					<div class="row template-image">
+						<img src="../static/coloring/images/new_template.png" height="180">
+						<p>Import New Template</p>
+					</div>
+				</a>
+
+				<div class ="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-body">
+								<p class="btn-close" data-dismiss="modal" aria-label="Close" style="color: #71B8E8; width: 50px; height: 1px;">Cancel</p>
+								<p style="color: #7E9FD1; font-size: 25px; text-align: center;">Import Template</p>
+								<div class="modal-inner-button" style="height: 50px; width: 200px; text-align: center; background-color: #71B8E8; border-radius: 10px; box-shadow: 2px 2px 4px #808080; padding-top: 10px; margin-left: 130px; margin-bottom: 20px;">
+									<p style="color: white;">Upload File</p>
+								</div>
+								<div class="modal-inner-button" style="height: 50px; width: 200px; text-align: center; background-color: #71B8E8; border-radius: 10px; box-shadow: 2px 2px 4px #808080; padding-top: 10px; margin-left: 130px; margin-bottom: 20px;">
+									<p style="color: white;">Select from Camera Roll</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
             </div>
             <div class="col-sm-4 template-row">
                 <div class="row template-image">
