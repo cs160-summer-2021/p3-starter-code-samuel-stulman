@@ -1,0 +1,385 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<title>P3 Coloring</title>
+
+	<!-- Make seperate css file for organization -->
+	<link rel="stylesheet" type="text/css" href="{% static 'coloring/css/style.css' %}" />
+	
+	<!-- Using google icons for icons in this deisgn. -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.0/css/font-awesome.min.css">
+	<!-- Link for bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	
+	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
+	<script src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'coloring/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
+
+
+
+	<script type="text/javascript" canvas="canvas">
+		window.onload = function() {
+			var canvas = document.getElementById('myCanvas');
+
+			// coloring page
+			var mandala = {
+				item: null,
+				lastClicked: null,
+				filePath: '/static/coloring/images/mandala-freepik.svg'
+			};
+
+			// color palette
+			var cp = {
+				history: ["#000000"], // black selected by default
+				options: [],
+				$container: $('#color-palette')
+			}
+
+			function myCustomInteraction() {
+				var tool = new paper.Tool();
+
+				tool.onMouseDown = function (event) {
+				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+				    if (hit) {
+				    		// Color pallette keeps track of the full history of colors, though we
+				    		// only color in with the most-recent color.
+				        hit.item.fillColor = cp.history[cp.history.length - 1];
+				    }
+				}
+			}
+
+			// create a color palette with the given colors
+			function createColorPalette(colors){
+
+				// create a swatch for each color
+				for (var i = colors.length - 1; i >= 0; i--) {
+					var $swatch = $("<div>").css("background-color", colors[i])
+									   .addClass("swatch");
+					$swatch.click(function(){
+						// add color to the color palette history
+					  	cp.history.push($(this).css("background-color"));
+					});
+					cp.$container.append($swatch);
+				}
+			}
+
+			// loads a set of colors from a json to create a color palette
+			function getColorsCreatePalette(){
+				cp.$container.html(" ");
+				$.getJSON('/static/coloring/vendors/material/material-colors.json', function(colors){
+					var keys = Object.keys(colors);
+					for (var i = keys.length - 1; i >= 0; i--) {
+						cp.options.push(colors[keys[i]][500]);
+					}
+					createColorPalette(cp.options);
+				});
+			}
+
+			function init(custom){
+				paper.setup(canvas);
+				getColorsCreatePalette();
+
+				paper.project.importSVG(mandala.filePath, function(item) {
+					mandala.item = item._children["design-freepik"];
+				    paper.project.insertLayer(0,mandala.item);
+
+				    if (custom) {
+				    	myCustomInteraction();
+				    } else {
+				    	myGradientInteraction();
+				    }
+
+				});
+			}
+
+			// Set up the mandala interactivity.
+			init(true);
+		}
+	</script>
+	<script>
+		  (function($) {
+			$.fn.paintBrush = function(options) {
+				var undoHistory = [];
+					var settings = {
+					'targetID' : 'blankCanvas'
+				},
+		
+					$this = $(this),
+					o = {},
+					ui = {},
+				
+				core = {
+					init : function(options) {
+						ui.$loadParentDiv = o.targetID;
+						core.draw();
+						core.controls();
+						//core.toggleScripts();
+					},
+		
+					canvasInit : function() {
+                            var img = new Image();
+                            img.src = "../static/coloring/images/pony_drawing.jpg";
+							context = document.getElementById("blankCanvas").getContext("2d");
+							context.lineCap = "round";
+							//Fill it with white background
+							context.save();
+
+                            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                            img.onload = function() {
+                                context.drawImage(img, 0, 0, context.canvas.width, context.canvas.height);
+                            }
+							// context.fillStyle = '#fff';
+							// context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+							context.restore();
+					},
+					
+					saveActions : function() { //maybe remove this
+							var imgData = document.getElementById("blankCanvas").toDataURL("image/png");
+							undoHistory.push(imgData);
+							$('#undo').removeAttr('disabled');
+					
+					},
+					
+					undoDraw : function() {
+						if(undoHistory.length > 0){
+							var undoImg = new Image();
+							$(undoImg).on('load', function(){
+								var context = document.getElementById("blankCanvas").getContext("2d");
+								context.drawImage(undoImg, 0,0);
+							});
+							undoImg.src = undoHistory.pop();
+							if(undoHistory.length == 0)
+								$('#undo').attr('disabled','disabled');
+						}                            
+					},
+		
+					draw : function() {
+							var canvas, cntxt, top, left, draw, draw = 0;                
+							canvas = document.getElementById("blankCanvas");
+							cntxt = canvas.getContext("2d");
+							top = $('#blankCanvas').offset().top;
+							left = $('#blankCanvas').offset().left;
+							core.canvasInit();
+								
+							//Drawing Code
+							$('#blankCanvas').mousedown(function(e){
+								if(e.button == 0){
+									draw = 1;
+									core.saveActions(); //Start The drawing flow. Save the state
+									cntxt.beginPath();
+									cntxt.moveTo(e.pageX-left, e.pageY-top);
+								} else {
+									draw = 0;
+								}
+							})
+							.mouseup(function(e){
+									if(e.button != 0){
+										draw = 1;
+									} else {
+										draw = 0;
+										cntxt.lineTo(e.pageX-left+1, e.pageY-top+1);
+										cntxt.stroke();
+										cntxt.closePath();
+									}
+							})
+							.mousemove(function(e){
+									if(draw == 1){
+										cntxt.lineTo(e.pageX-left+1, e.pageY-top+1);
+										cntxt.stroke();
+									}
+							});
+																								
+					},
+					
+					controls : function() {
+							canvas = document.getElementById("blankCanvas");
+							cntxt = canvas.getContext("2d");
+										
+								$('#brush_size').change(function(e){
+										cntxt.lineWidth = $(this).val();
+										//core.toggleScripts();
+								});            
+								
+								$('.color-picker').click(function(e){
+									console.log("working 1");
+									e.preventDefault();
+									console.log("working 2");
+									$('#color-picker').removeClass('selected');
+									console.log("working 3");
+									$(this).addClass('selected');
+									console.log("working 4");
+									cntxt.strokeStyle = $(this).css('--special-color');
+									console.log("working 5");
+									core.toggleScripts();
+									console.log("working 6");
+								});
+						
+										//Undo Binding
+								$('#undo').click(function(e){
+									e.preventDefault();
+									core.undoDraw()
+									//core.toggleScripts();
+								});
+						
+								//Init the brush and color
+								$('#color-picker-red').click();
+								$('#brush_size').change();
+										
+								$('#controls').live("click", function(){
+									core.toggleScripts();
+								});
+					},
+					
+					toggleScripts : function() {
+							//$('#colors').slideToggle(400);
+							//$('#control-buttons').toggle(400);
+					}
+				};
+		
+				$.extend(true, o, settings, options);
+		
+				core.init();
+		
+			};
+		})(jQuery);
+
+
+	</script>
+</head>
+<body>
+	<!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
+	<!-- <div id="color-palette"></div> -->
+
+	<div class="container-fluid">
+		<div class="row nav-bar">
+
+			<!-- Make this into a button later -->
+			<div class="col-sm-3 back-button">
+				<div class="row back-button" onclick="gallery()">
+					<span class="material-icons" style="color: white; font-size: 40px;">arrow_back</span>
+				</div>
+			</div>
+
+			<div class="col-sm-6 utensil-down">
+				<div class="row utensil-down">
+					<div class="col-sm-2 nav-icon">
+						<div class="row nav-icon">
+							<img src="https://img.icons8.com/material-outlined/24/ffffff/color-dropper.png" width="35" height="35"/>
+						</div>
+					</div>
+					<div class="col-sm-2 nav-icon">
+						<div class="row nav-icon">
+							<img src="https://img.icons8.com/material-outlined/24/ffffff/pencil--v1.png" width="35" height="35"/>
+						</div>
+					</div>
+					<div class="col-sm-2 nav-icon">
+						<div class="row nav-icon">
+							<img src="https://img.icons8.com/material-outlined/24/ffffff/ball-point-pen.png" width="35" height="35"/>
+						</div>
+					</div>
+					<div class="col-sm-2 nav-icon">
+						<div class="row nav-icon">
+							<img src="https://img.icons8.com/ios-glyphs/30/ffffff/chisel-tip-marker.png" width="35" height="35"/>
+						</div>
+					</div>
+					<div class="col-sm-2 nav-icon">
+						<div class="row nav-icon">
+							<img src="https://img.icons8.com/material-rounded/24/ffffff/paint-brush.png" width="35" height="35"/>
+						</div>
+					</div>
+					<div class="col-sm-2 nav-icon">
+						<div class="row nav-icon">
+							<img src="https://img.icons8.com/ios-glyphs/30/ffffff/eraser.png" width="35" height="35"/>
+						</div>
+					</div>
+				</div>
+				<div class="row utensil-down-drag">
+					<span class="material-icons" style="color: white; transform: scale(4,1); padding-left: 15px;">horizontal_rule</span>
+				</div>
+			</div>
+
+			<div class="col-sm-3 save-undo-redo">
+				<div class="row save-undo-redo">
+					<div class="col-sm-4 save-undo-redo-icon" id="undo">
+						<div class="row save-undo-redo-icon undo">
+							<span class="material-icons" style="color: #334867; font-size: 50px; text-shadow: 2px 2px 4px #808080;">undo</span>
+						</div>
+					</div>
+					<div class="col-sm-4 save-undo-redo-icon">
+						<div class="row save-undo-redo-icon">
+							<span class="material-icons" style="color: #334867; font-size: 50px; text-shadow: 2px 2px 4px #808080;">redo</span>
+						</div>
+					</div>
+					<div class="col-sm-4 save-undo-redo-icon">
+						<div class="row save-undo-redo-icon">
+							<span class="material-icons" style="color: #334867; font-size: 50px; text-shadow: 2px 2px 4px #808080;">save</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class ="drawing-area">
+			<canvas id="blankCanvas" width="730px" height="730px" style="background-image: '../static/coloring/images/pony_drawing.jpg'; position: absolute; margin-left: 200px;"></canvas>
+			<div class="quick-palette">
+				<div style="height: 30px">
+					<img class="drag-icon" src="../static/coloring/images/drag-icon.png" >
+				</div>
+					<div class="color-wheel" style="position: absolute; left: 30px">
+						<img class="coloring-wheel" src="../static/coloring/images/wheel-5-ryb.png" >
+						<div class= "color-picker color-picker-red"></div>
+						<div class= "color-picker color-picker-yellow"></div>
+						<div class= "color-picker color-picker-green"></div>
+						<div class= "color-picker color-picker-blue"></div>
+						<div class= "color-picker color-picker-pink"></div>
+					</div>
+				<div class= "brush-width-slider">
+					<!-- <input type="range" min="1" max="100" value="50" class="range-slider" id='myRange'> -->
+					<img class="brush-width" src="../static/coloring/images/Polygon-3.png" >
+				</div>
+				<p class="slider-text brush-width-text">Brush Width</p>
+				<div class= "slider darkness-slider">
+					<!-- <input type="range" min="1" max="100" value="50" class="range-slider" id='myRange'> -->
+				</div>
+				<div style="padding-top: 29px;"><p class="slider-text darkness-text">Darkness</p></div>
+				<div class= "slider opacity-slider"></div>
+				<div style="padding-top: 29px;"><p class="slider-text opacity-text">Opacity</p></div>
+			</div>
+		</div>
+		
+		
+		</div>
+	</div>
+	
+</body>
+<script>
+	$( function() {
+		let down = false;
+		$(document).ready(function(){
+			$(".row.utensil-down-drag").click(function(){
+				  if (down) {
+					$(".row.utensil-down").slideDown();
+					down = false;
+				  } else {
+					$(".row.utensil-down").slideUp();
+					down = true;
+				  }
+			});
+		});
+	});
+	$(".quick-palette").draggable({containment: "parent"});
+	//$(".drawing-area").droppable();
+
+	function gallery() {
+		window.location.href = "gallery";
+	}
+	$(document).ready(function(){
+        $('#canvas-display').paintBrush();
+    });
+</script>
+</html>

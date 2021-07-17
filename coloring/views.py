@@ -17,3 +17,6 @@ def template(request):
     
 def drawing(request):
     return render(request, 'coloring/drawing.html')
+
+def pony_template(request):
+    return render(request, 'coloring/pony_template.html')
