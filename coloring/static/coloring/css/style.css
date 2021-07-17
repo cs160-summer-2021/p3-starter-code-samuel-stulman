@@ -124,6 +124,52 @@ html, body, .container-fluid {
     width: 171.6px;
     height: 171.6px;
 }
+.color-picker-red {
+    position: absolute;
+    left: 0px;
+    right: 21.33%;
+    top: 40px;
+    width: 67px;
+    height: 62px;
+    --special-color: #ff0101;
+    
+}
+.color-picker-yellow {
+    position: absolute;
+    left: 47px;
+    right: 21.33%;
+    top: 0px;
+    width: 67px;
+    height: 62px;
+    --special-color: #fbff00;
+}
+.color-picker-green {
+    position: absolute;
+    left: 96px;
+    right: 21.33%;
+    top: 33px;
+    width: 67px;
+    height: 62px;
+    --special-color: #1fd64d;
+}
+.color-picker-blue {
+    position: absolute;
+    left: 71px;
+    right: 21.33%;
+    top: 80px;
+    width: 67px;
+    height: 62px;
+    --special-color: #0077ff;
+}
+.color-picker-pink {
+    position: absolute;
+    left: 14px;
+    right: 21.33%;
+    top: 88px;
+    width: 67px;
+    height: 62px;
+    --special-color: #d842d0;
+}
 /* .brush-width-slider {
     position: absolute;
     left: 0%;
@@ -138,13 +184,9 @@ html, body, .container-fluid {
     border-radius: 3px;
     transform: rotate(-90deg);
 } */
-/* .brush-width-slider {
-    width: 0;
-    height: 0;
-    border-top: 50px solid transparent;
-    border-right: 100px solid red;
-    border-bottom: 50px solid transparent;
-} */
+ .brush-width-slider {
+    padding-top: 10px;
+} 
 .brush-width {
     padding-top:157.3px;
     padding-left: 23px;
@@ -174,8 +216,12 @@ html, body, .container-fluid {
     background: linear-gradient(90deg, rgba(255, 234, 253, 0.42) 0%, #FCB8F5 100%);
 }
 
-.slider {
-    
+.range-slider #myRange {
+    -webkit-appearance: none;
+    width: 50%;
+    height: 15px;
+    background: #000;
+    outline: none;
 }
 
 /* END QUICK PALETTE STYLING */
