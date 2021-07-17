@@ -17,6 +17,9 @@
 	
 	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
+	<script src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'coloring/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
+
 
 
 	<script type="text/javascript" canvas="canvas">
@@ -171,7 +174,28 @@
 				</div>
 			</div>
 		</div>
+		<div class ="drawing-area">
+			<div class="quick-palette">
+				<div>
+					<img class="drag-icon" src="../static/coloring/images/drag-icon.png" >
+				</div>
+				<div class="color-wheel">
+					<img class="coloring-wheel" src="../static/coloring/images/wheel-5-ryb.png" >
+				</div>
+				<div class= "brush-width-slider">
+					<img class="brush-width" src="../static/coloring/images/Polygon-3.png" >
+				</div>
+				<p class="slider-text brush-width-text">Brush Width</p>
+				<div class= "slider darkness-slider"></div>
+				<div style="padding-top: 29px;"><p class="slider-text darkness-text">Darkness</p></div>
+				<div class= "slider opacity-slider"></div>
+				<div style="padding-top: 29px;"><p class="slider-text opacity-text">Opacity</p></div>
+			</div>
+		</div>
+		
+		</div>
 	</div>
+	
 </body>
 <script>
 	$( function() {
@@ -188,6 +212,8 @@
 			});
 		});
 	});
+	$(".quick-palette").draggable({containment: "parent"});
+	//$(".drawing-area").droppable();
 
 	function gallery() {
 		window.location.href = "gallery";

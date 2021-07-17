@@ -14,3 +14,6 @@ def gallery(request):
 
 def template(request):
     return render(request, 'coloring/template.html')
+    
+def drawing(request):
+    return render(request, 'coloring/drawing.html')

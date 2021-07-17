@@ -3,6 +3,10 @@
 NEW INTERACTION PAGE 
 
 ***************/
+html, body, .container-fluid {
+    height: 100%;
+    width: 100%;
+}
 
 /* START NAV BAR STYLING */
 
@@ -39,7 +43,7 @@ NEW INTERACTION PAGE
     background-color: #334867;
     width: 370px;
     height: 50px;
-    margin-left: 75px;
+    margin-left: 74px;
     border-radius: 0 0 10px 10px;
     box-shadow: 2px 2px 4px #808080;
     /* border: 2px solid black; */
@@ -75,6 +79,106 @@ NEW INTERACTION PAGE
 }
 
 /* END NAV BAR STYLING */
+
+/* START QUICK PALETTE STYLING */
+.drawing-area {
+    height: calc(100vh - 100px);
+}
+
+.quick-palette {
+    width: 216.1px;
+    height: 389.5px;
+    background-color: #383839;
+    box-shadow: 3.5px 3.5px 15.1px 3.5px rgba(51, 72, 103, 0.47);
+    border-radius: 25px;
+    /* position: relative; */
+}
+
+.slider-text {
+    left: 21.67%;
+    right: 34%;
+    position: aboslute;
+    /* font-family: Roboto; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13.3px;
+    line-height: 16px;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+.brush-width-text {
+}
+.darkness-text {
+    top: 4.44px;
+}
+.opacity-text {
+}
+.coloring-wheel {
+    position: absolute;
+    left: 14.33%;
+    right: 21.33%;
+    top: 6.16%;
+    bottom: 50%;
+    background: url(coloring/static/coloring/images/wheel-5-ryb.png);
+    width: 171.6px;
+    height: 171.6px;
+}
+/* .brush-width-slider {
+    position: absolute;
+    left: 0%;
+    right: 86.67%;
+    top: 241.9%;
+    bottom: -30.59%;
+    width: 35.5px;
+    height: 266.8px;
+
+    background: #FCB8F5;
+    border: 1px solid #262627;
+    border-radius: 3px;
+    transform: rotate(-90deg);
+} */
+/* .brush-width-slider {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-right: 100px solid red;
+    border-bottom: 50px solid transparent;
+} */
+.brush-width {
+    padding-top:157.3px;
+    padding-left: 23px;
+    width: 194px;
+}
+.darkness-slider {
+    position: absolute;
+    width: 171.65px;
+    height: 26.68px;
+    left: 22.23px;
+    padding-top: 8px;
+
+    
+    border: 1px solid #262627;
+    border-radius: 3px;
+    background: linear-gradient(89.89deg, #FCB8F5 0.1%, #3E0138 99.91%);
+}
+.opacity-slider {
+    position: absolute;
+    width: 171.65px;
+    height: 26.68px;
+    left: 22.23px;
+
+    
+    border: 1px solid #262627;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(255, 234, 253, 0.42) 0%, #FCB8F5 100%);
+}
+
+.slider {
+    
+}
+
+/* END QUICK PALETTE STYLING */
 
 /**************
 
