@@ -101,6 +101,148 @@
 			init(true);
 		}
 	</script>
+	<script>
+		  (function($) {
+			$.fn.paintBrush = function(options) {
+				var undoHistory = [];
+					var settings = {
+					'targetID' : 'blankCanvas'
+				},
+		
+					$this = $(this),
+					o = {},
+					ui = {},
+				
+				core = {
+					init : function(options) {
+						ui.$loadParentDiv = o.targetID;
+						core.draw();
+						core.controls();
+						//core.toggleScripts();
+					},
+		
+					canvasInit : function() {
+							context = document.getElementById("blankCanvas").getContext("2d");
+							context.lineCap = "round";
+							//Fill it with white background
+							context.save();
+							context.fillStyle = '#fff';
+							context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+							context.restore();
+					},
+					
+					saveActions : function() { //maybe remove this
+							var imgData = document.getElementById("blankCanvas").toDataURL("image/png");
+							undoHistory.push(imgData);
+							$('#undo').removeAttr('disabled');
+					
+					},
+					
+					undoDraw : function() {
+						if(undoHistory.length > 0){
+							var undoImg = new Image();
+							$(undoImg).on('load', function(){
+								var context = document.getElementById("blankCanvas").getContext("2d");
+								context.drawImage(undoImg, 0,0);
+							});
+							undoImg.src = undoHistory.pop();
+							if(undoHistory.length == 0)
+								$('#undo').attr('disabled','disabled');
+						}                            
+					},
+		
+					draw : function() {
+							var canvas, cntxt, top, left, draw, draw = 0;                
+							canvas = document.getElementById("blankCanvas");
+							cntxt = canvas.getContext("2d");
+							top = $('#blankCanvas').offset().top;
+							left = $('#blankCanvas').offset().left;
+							core.canvasInit();
+								
+							//Drawing Code
+							$('#blankCanvas').mousedown(function(e){
+								if(e.button == 0){
+									draw = 1;
+									core.saveActions(); //Start The drawing flow. Save the state
+									cntxt.beginPath();
+									cntxt.moveTo(e.pageX-left, e.pageY-top);
+								} else {
+									draw = 0;
+								}
+							})
+							.mouseup(function(e){
+									if(e.button != 0){
+										draw = 1;
+									} else {
+										draw = 0;
+										cntxt.lineTo(e.pageX-left+1, e.pageY-top+1);
+										cntxt.stroke();
+										cntxt.closePath();
+									}
+							})
+							.mousemove(function(e){
+									if(draw == 1){
+										cntxt.lineTo(e.pageX-left+1, e.pageY-top+1);
+										cntxt.stroke();
+									}
+							});
+																								
+					},
+					
+					controls : function() {
+							canvas = document.getElementById("blankCanvas");
+							cntxt = canvas.getContext("2d");
+										
+								$('#brush_size').change(function(e){
+										cntxt.lineWidth = $(this).val();
+										//core.toggleScripts();
+								});            
+								
+								$('.color-picker').click(function(e){
+									console.log("working 1");
+									e.preventDefault();
+									console.log("working 2");
+									$('#color-picker').removeClass('selected');
+									console.log("working 3");
+									$(this).addClass('selected');
+									console.log("working 4");
+									cntxt.strokeStyle = $(this).css('--special-color');
+									console.log("working 5");
+									core.toggleScripts();
+									console.log("working 6");
+								});
+						
+										//Undo Binding
+								$('#undo').click(function(e){
+									e.preventDefault();
+									core.undoDraw()
+									//core.toggleScripts();
+								});
+						
+								//Init the brush and color
+								$('#color-picker-red').click();
+								$('#brush_size').change();
+										
+								$('#controls').live("click", function(){
+									core.toggleScripts();
+								});
+					},
+					
+					toggleScripts : function() {
+							//$('#colors').slideToggle(400);
+							//$('#control-buttons').toggle(400);
+					}
+				};
+		
+				$.extend(true, o, settings, options);
+		
+				core.init();
+		
+			};
+		})(jQuery);
+
+
+	</script>
 </head>
 <body>
 	<!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
@@ -156,8 +298,8 @@
 
 			<div class="col-sm-3 save-undo-redo">
 				<div class="row save-undo-redo">
-					<div class="col-sm-4 save-undo-redo-icon">
-						<div class="row save-undo-redo-icon">
+					<div class="col-sm-4 save-undo-redo-icon" id="undo">
+						<div class="row save-undo-redo-icon undo">
 							<span class="material-icons" style="color: #334867; font-size: 50px; text-shadow: 2px 2px 4px #808080;">undo</span>
 						</div>
 					</div>
@@ -176,19 +318,27 @@
 		</div>
 
 		<div class ="drawing-area">
-			<canvas id="myCanvas" width="730px" height="730px" style="position: absolute; margin-left: 200px;"></canvas>
+			<canvas id="blankCanvas" width="730px" height="730px" style="position: absolute; margin-left: 200px;"></canvas>
 			<div class="quick-palette">
-				<div>
+				<div style="height: 30px">
 					<img class="drag-icon" src="../static/coloring/images/drag-icon.png" >
 				</div>
-				<div class="color-wheel">
-					<img class="coloring-wheel" src="../static/coloring/images/wheel-5-ryb.png" >
-				</div>
+					<div class="color-wheel" style="position: absolute; left: 30px">
+						<img class="coloring-wheel" src="../static/coloring/images/wheel-5-ryb.png" >
+						<div class= "color-picker color-picker-red"></div>
+						<div class= "color-picker color-picker-yellow"></div>
+						<div class= "color-picker color-picker-green"></div>
+						<div class= "color-picker color-picker-blue"></div>
+						<div class= "color-picker color-picker-pink"></div>
+					</div>
 				<div class= "brush-width-slider">
+					<!-- <input type="range" min="1" max="100" value="50" class="range-slider" id='myRange'> -->
 					<img class="brush-width" src="../static/coloring/images/Polygon-3.png" >
 				</div>
 				<p class="slider-text brush-width-text">Brush Width</p>
-				<div class= "slider darkness-slider"></div>
+				<div class= "slider darkness-slider">
+					<!-- <input type="range" min="1" max="100" value="50" class="range-slider" id='myRange'> -->
+				</div>
 				<div style="padding-top: 29px;"><p class="slider-text darkness-text">Darkness</p></div>
 				<div class= "slider opacity-slider"></div>
 				<div style="padding-top: 29px;"><p class="slider-text opacity-text">Opacity</p></div>
@@ -221,5 +371,8 @@
 	function gallery() {
 		window.location.href = "gallery";
 	}
+	$(document).ready(function(){
+        $('#canvas-display').paintBrush();
+    });
 </script>
 </html>
