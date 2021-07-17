@@ -134,20 +134,20 @@
 					saveActions : function() { //maybe remove this
 							var imgData = document.getElementById("blankCanvas").toDataURL("image/png");
 							undoHistory.push(imgData);
-							$('.undo').removeAttr('disabled');
+							$('#undo').removeAttr('disabled');
 					
 					},
 					
 					undoDraw : function() {
 						if(undoHistory.length > 0){
 							var undoImg = new Image();
-							$(undoImg).load(function(){
+							$(undoImg).on('load', function(){
 								var context = document.getElementById("blankCanvas").getContext("2d");
 								context.drawImage(undoImg, 0,0);
 							});
 							undoImg.src = undoHistory.pop();
 							if(undoHistory.length == 0)
-								$('.undo').attr('disabled','disabled');
+								$('#undo').attr('disabled','disabled');
 						}                            
 					},
 		
@@ -213,10 +213,10 @@
 								});
 						
 										//Undo Binding
-								$('.undo').click(function(e){
+								$('#undo').click(function(e){
 									e.preventDefault();
 									core.undoDraw()
-									core.toggleScripts();
+									//core.toggleScripts();
 								});
 						
 								//Init the brush and color
@@ -298,7 +298,7 @@
 
 			<div class="col-sm-3 save-undo-redo">
 				<div class="row save-undo-redo">
-					<div class="col-sm-4 save-undo-redo-icon">
+					<div class="col-sm-4 save-undo-redo-icon" id="undo">
 						<div class="row save-undo-redo-icon undo">
 							<span class="material-icons" style="color: #334867; font-size: 50px; text-shadow: 2px 2px 4px #808080;">undo</span>
 						</div>
@@ -336,7 +336,7 @@
 				</div>
 				<p class="slider-text brush-width-text">Brush Width</p>
 				<div class= "slider darkness-slider">
-					<input type="range" min="1" max="100" value="50" class="range-slider" id='myRange'>
+					<!-- <input type="range" min="1" max="100" value="50" class="range-slider" id='myRange'> -->
 				</div>
 				<div style="padding-top: 29px;"><p class="slider-text darkness-text">Darkness</p></div>
 				<div class= "slider opacity-slider"></div>
