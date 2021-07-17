@@ -199,6 +199,7 @@
 					controls : function() {
 							canvas = document.getElementById("blankCanvas");
 							cntxt = canvas.getContext("2d");
+                            curr_color = 'black';
 										
 								$('#brush_size').change(function(e){
 										cntxt.lineWidth = $(this).val();
@@ -214,6 +215,7 @@
 									$(this).addClass('selected');
 									console.log("working 4");
 									cntxt.strokeStyle = $(this).css('--special-color');
+                                    curr_color = cntxt.strokeStyle;
 									console.log("working 5");
 									core.toggleScripts();
 									console.log("working 6");
@@ -223,6 +225,54 @@
 								$('#undo').click(function(e){
 									e.preventDefault();
 									core.undoDraw()
+									//core.toggleScripts();
+								});
+
+                                // ink
+                                $('#ink').click(function(e){
+									e.preventDefault();
+									cntxt.lineWidth = 5;
+                                    cntxt.strokeStyle = curr_color;
+									//core.toggleScripts();
+								});
+
+                                // pencil
+                                $('#pencil').click(function(e){
+									e.preventDefault();
+									cntxt.lineWidth = 3;
+                                    cntxt.strokeStyle = curr_color;
+									//core.toggleScripts();
+								});
+
+                                // pen
+                                $('#pen').click(function(e){
+									e.preventDefault();
+									cntxt.lineWidth = 1;
+                                    cntxt.strokeStyle = curr_color;
+									//core.toggleScripts();
+								});
+
+                                // marker
+                                $('#marker').click(function(e){
+									e.preventDefault();
+									cntxt.lineWidth = 20;
+                                    cntxt.strokeStyle = curr_color;
+									//core.toggleScripts();
+								});
+                                
+                                // paint
+                                $('#paint').click(function(e){
+									e.preventDefault();
+									cntxt.lineWidth = 40;
+                                    cntxt.strokeStyle = curr_color;
+									//core.toggleScripts();
+								});
+
+                                // eraser
+                                $('#eraser').click(function(e){
+									e.preventDefault();
+									cntxt.lineWidth = 20;
+                                    cntxt.strokeStyle = 'white';
 									//core.toggleScripts();
 								});
 						
@@ -267,32 +317,32 @@
 
 			<div class="col-sm-6 utensil-down">
 				<div class="row utensil-down">
-					<div class="col-sm-2 nav-icon">
+					<div class="col-sm-2 nav-icon" id="ink">
 						<div class="row nav-icon">
 							<img src="https://img.icons8.com/material-outlined/24/ffffff/color-dropper.png" width="35" height="35"/>
 						</div>
 					</div>
-					<div class="col-sm-2 nav-icon">
+					<div class="col-sm-2 nav-icon" id="pencil">
 						<div class="row nav-icon">
 							<img src="https://img.icons8.com/material-outlined/24/ffffff/pencil--v1.png" width="35" height="35"/>
 						</div>
 					</div>
-					<div class="col-sm-2 nav-icon">
+					<div class="col-sm-2 nav-icon" id="pen">
 						<div class="row nav-icon">
 							<img src="https://img.icons8.com/material-outlined/24/ffffff/ball-point-pen.png" width="35" height="35"/>
 						</div>
 					</div>
-					<div class="col-sm-2 nav-icon">
+					<div class="col-sm-2 nav-icon" id="marker">
 						<div class="row nav-icon">
 							<img src="https://img.icons8.com/ios-glyphs/30/ffffff/chisel-tip-marker.png" width="35" height="35"/>
 						</div>
 					</div>
-					<div class="col-sm-2 nav-icon">
+					<div class="col-sm-2 nav-icon" id="paint">
 						<div class="row nav-icon">
 							<img src="https://img.icons8.com/material-rounded/24/ffffff/paint-brush.png" width="35" height="35"/>
 						</div>
 					</div>
-					<div class="col-sm-2 nav-icon">
+					<div class="col-sm-2 nav-icon" id="eraser">
 						<div class="row nav-icon">
 							<img src="https://img.icons8.com/ios-glyphs/30/ffffff/eraser.png" width="35" height="35"/>
 						</div>
